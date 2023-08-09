@@ -18,3 +18,4 @@ setup(
 )
 
 # python setup.py build
+# https://plainenglish.io/blog/convert-a-python-project-to-an-executable-exe-file
