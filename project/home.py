@@ -5,9 +5,8 @@ from back_data_constantes import delete_all_data
 from membres_goupe import my_screen as membres
 import webbrowser
 
-
 home = customtkinter.CTk()
-home.geometry("800x350")
+home.geometry("800x380")
 home.resizable(False, False)
 home.title("CALCUL ET DIMENSIONNEMENT DES POUTRES")
 

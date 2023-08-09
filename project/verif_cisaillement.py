@@ -40,11 +40,11 @@ def my_screen():
             Msd_val = float(get_resultat_calcul('Msd')[1])
             Mr_val = float(get_resultat_calcul('Mr')[1])
             
-            Vsd_appuis = round(calcul_Vsd_appuis(Q_val, l_entry_value, nombre_appuis_entry_value, G_val), 2)
-            Av = round(calcul_Av(type_profile, A_val, B_val, tf_val, tw_val, r_val, h_val), 2)
-            Vplrd = round(calcul_Vplrd(Av, fy_val), 2)
+            Vsd_appuis = float(calcul_Vsd_appuis(Q_val, l_entry_value, nombre_appuis_entry_value, G_val))
+            Av = float(calcul_Av(type_profile, A_val, B_val, tf_val, tw_val, r_val, h_val))
+            Vplrd = float(calcul_Vplrd(Av, fy_val))
             if Vsd_appuis is not None:
-                rau = round(calcul_rau(Vsd_appuis, Vplrd), 2)
+                rau = float(calcul_rau(Vsd_appuis, Vplrd))
             
                 dataExcel = GetDataExcelFile()
                 section_type = get_resultat_calcul('Type de section profilé')[1]
@@ -79,13 +79,12 @@ def my_screen():
                     root.destroy()
                     redimmention()
 
-                
                 # Sauvegarde
-                Vsd_appuis_result = ("Vsd avec appuis", Vsd_appuis)
-                Av_result = ("Av", Av)
-                Vplrd_result = ("Vplrd", Vplrd)
-                Rau_result = ("Rau", rau)
-                Mv_rd_result = ("Mv_rd", Mv_rd)
+                Vsd_appuis_result = ("Vsd avec appuis", round(Vsd_appuis, 2))
+                Av_result = ("Av", round(Av, 2))
+                Vplrd_result = ("Vplrd", round(Vplrd, 2))
+                Rau_result = ("Rau", round(rau, 2))
+                Mv_rd_result = ("Mv_rd", round(Mv_rd, 2))
                 cond_verif_result1 = ("Resistance poutre (Au cisaillement)", cond_state1)
                 cond_verif_result2 = ("Resistance poutre (En presence de l'effort tranchant et moment flechissant)", cond_state2)
 

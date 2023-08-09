@@ -1,23 +1,23 @@
 # Ici nous aurons nos interfaces graphiques
 import customtkinter
-from configuration_one import *
+# from configuration_one import *
+import configuration_one as config_one_module
 from resultats import my_screen as resultats_dim
 from back_data_constantes import delete_partial_data
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
 
-root = customtkinter.CTk()
-root.geometry("800x350")
-root.resizable(False, False)
-root.title("CALCUL ET DIMENSIONNEMENT DES POUTRES")
-
 def my_screen():
-
+    root = customtkinter.CTk()
+    root.geometry("800x350")
+    root.resizable(False, False)
+    root.title("CALCUL ET DIMENSIONNEMENT DES POUTRES")
+    
     def redimensionner():
         root.destroy()
         delete_partial_data()
-        config_one()
+        config_one_module.config_one()
         
     def voir_resultats():
         resultats_dim()

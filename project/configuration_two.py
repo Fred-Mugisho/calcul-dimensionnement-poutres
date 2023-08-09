@@ -15,11 +15,14 @@ def my_screen(liste_profiles: list):
     def continuer_config():
         choix_materiaux_entry_value = choix_materiaux_entry.get()
         profilee = ('Profilé', choix_materiaux_entry_value)
-        add_data_to_db_resultat_calcul(profilee)
-        
-        root.destroy()
-        classe_section()
-                
+        if choix_materiaux_entry_value != "CTkOptionMenu":
+            add_data_to_db_resultat_calcul(profilee)
+
+            root.destroy()
+            classe_section()
+            
+        error.configure(text="Veuillez selectionner une valeur", text_color='red')
+
     frame = customtkinter.CTkFrame(master=root)
     frame.pack(pady=20, padx=60, fill="both", expand=True)
 
@@ -30,9 +33,11 @@ def my_screen(liste_profiles: list):
     choix_materiaux_label.pack(padx=10)
     choix_materiaux_entry = customtkinter.CTkOptionMenu(master=frame, font=("Roboto", 16), width=300, height=30)
     choix_materiaux_entry.pack(pady=12, padx=10)
-    
+
     CTkScrollableDropdown(choix_materiaux_entry, values=liste_profiles, justify="left", button_color="transparent")
 
+    error = customtkinter.CTkLabel(master=frame, text="", font=("Roboto", 16,))
+    error.pack(pady=2, padx=10)
 
     button = customtkinter.CTkButton(master=frame, text="CONTINUER", width=300, height=30, font=("Roboto", 16, 'bold'), command=continuer_config)
     button.pack(pady=12, padx=10)

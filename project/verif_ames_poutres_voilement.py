@@ -27,7 +27,6 @@ def my_screen():
             fyw_entry_value = float(fyw_entry.get())
             mfrd_point_entry_value = float(mfrd_point_entry.get())
             vba_rd_entry_value = float(vba_rd_entry.get())
-            nsd_entry_value = float(nsd_entry.get())
             
             choix_cas_entry_value = choix_cas_entry.get()
             
@@ -38,6 +37,7 @@ def my_screen():
             Vsd = float(get_resultat_calcul('Vsd')[1])
             Msd = float(get_resultat_calcul('Msd')[1])
             Mr = float(get_resultat_calcul('Mr')[1])
+            Nsd = float(get_resultat_calcul('Nsd')[1])
             
             if choix_cas_entry_value == choix[0]:
                 cas = 'cas1'
@@ -67,7 +67,7 @@ def my_screen():
                 redimmention()
             
             Nfrd = calcul_Nfrd(Grand_A, fy)
-            Mfrd = calcul_Mfrd(mfrd_point_entry_value, nsd_entry_value, Nfrd)
+            Mfrd = calcul_Mfrd(mfrd_point_entry_value, Nsd, Nfrd)
             
             verif_interaction = verification_interaction_Vsd_Msd_Nsd(Vsd, vba_rd_entry_value, Msd, Mfrd, Mr)
             if verif_interaction == "Condition non vérifiée":
@@ -81,7 +81,6 @@ def my_screen():
             Vbrd_result = ("Vbrd", Vbrd)
             Nfrd_result = ("Nfrd", Nfrd)
             Mfrd_result = ("Mfrd", Mfrd)
-            Nsd_resultat = ("Nsd", nsd_entry_value)
             
             cond_verif1_result = ("Resistance des ames au voilement", verif_resistance)
             cond_verif2_result = ("Cisaillement pur", cond_verif_cisaillement)
@@ -93,7 +92,6 @@ def my_screen():
             add_data_to_db_resultat_calcul(resultat=Vbrd_result)
             add_data_to_db_resultat_calcul(resultat=Nfrd_result)
             add_data_to_db_resultat_calcul(resultat=Mfrd_result)
-            add_data_to_db_resultat_calcul(resultat=Nsd_resultat)
             
             add_data_to_db_resultat_verification(resultat=cond_verif1_result)
             add_data_to_db_resultat_verification(resultat=cond_verif2_result)
@@ -138,8 +136,6 @@ def my_screen():
     mfrd_point_entry.pack(pady=12, padx=10)
     vba_rd_entry = customtkinter.CTkEntry(master=frame3, placeholder_text="Entrer la valeur de Vba,rd", font=("Roboto", 16), width=600, height=30)
     vba_rd_entry.pack(pady=5, padx=10)
-    nsd_entry = customtkinter.CTkEntry(master=frame3, placeholder_text="Entrer la valeur de Nsd", font=("Roboto", 16), width=600, height=30)
-    nsd_entry.pack(pady=5, padx=10)
     
     error = customtkinter.CTkLabel(master=root, text="", font=("Roboto", 16,))
     error.pack(pady=2, padx=10)

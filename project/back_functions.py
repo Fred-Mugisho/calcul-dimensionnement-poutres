@@ -140,7 +140,7 @@ def calcul_Mvrd(Wpl, rau, Av, tw, fy):
     Mvrd = (Wpl - (rau * Av**2 / 4*tw)) * (fy / GAMA_M0)
     return Mvrd
 
-def calcul_flexion_deviee(qv, qh, Gv, Gh, alpha, l):
+def calcul_flexion_deviee(qv, qh, Gv, Gh, alpha, l, Wpl_y, Wpl_z, fy):
     cos_alpha = math.cos(alpha)
     sin_alpha = math.sin(alpha)
     qy = ((qv*cos_alpha) + (Gv*cos_alpha) + (qh*cos_alpha) + (Gh*sin_alpha))
@@ -151,7 +151,22 @@ def calcul_flexion_deviee(qv, qh, Gv, Gh, alpha, l):
     
     My_sd = Qy_ponderee*(l**2)/8
     Mz_sd = Qz_ponderee*(l**2)/8
-    return My_sd, Mz_sd
+        
+    Mpl_y_rd = Wpl_y*fy/GAMA_M0
+    Mpl_z_rd = Wpl_z*fy/GAMA_M0
+    
+    reponse = {
+        'qy': qy,
+        'qz': qz,
+        'Qy_ponderee': Qy_ponderee,
+        'Qz_ponderee': Qz_ponderee,
+        'My_sd': My_sd,
+        'Mz_sd': Mz_sd,
+        'Mpl_y_rd': Mpl_y_rd,
+        'Mpl_z_rd': Mpl_z_rd,
+    }
+    
+    return reponse
 
 def calcul_Nplrd(A, fy):
     Nplrd = A * fy / GAMA_M0
@@ -440,5 +455,20 @@ def verification_interaction_Vsd_Msd_Nsd(Vsd, Vba_rd, Msd, Mf_rd, Mpl_rd):
         return "Condition vérifiée"
     comparator = Mf_rd + ((Mpl_rd - Mf_rd)*(1 - ((2*Vsd/Vba_rd) - 1)**2))
     return "Condition vérifiée" if Msd <= comparator else "Condition non vérifiée"
+
+def verification_flexion_deviee(classe, Nsd, A, fy, My_sd, Mz_sd, Mpl_y_rd, Mpl_z_rd, Wx, Wy, Wz, Nplrd):
+    if classe in [1, 2]:
+        n = Nsd/Nplrd
+        beta = 5*n
+        cond1 = (((My_sd/Mpl_y_rd)**2) + ((Mz_sd/Mpl_z_rd)**beta))
+        return 1 if cond1 <= 1 else 0
+    elif classe == 3:
+        cond2 = (My_sd/Wy) + (Mz_sd/Wz)
+        cond3 = fy/GAMA_M0
+        fyd = fy/GAMA_M0
+        cond4 = (Nsd/A*fyd) + (My_sd/Wx*fyd) + (My_sd/Wy*fyd)
+        return 1 if cond2 <= cond3 or cond4 <= 1 else 0
+    else:
+        return 0
 
 # ------------------------- Fin implementation des verifications -------------------------- #

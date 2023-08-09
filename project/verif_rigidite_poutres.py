@@ -2,7 +2,7 @@ import customtkinter
 from back_data_constantes import *
 from back_functions import *
 from verif_stabilite_deversement_poutres import my_screen as stabilite_deversement
-from redimensionnement import my_screen as redimmention
+from redimensionnement import my_screen as redimmension
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("green")
@@ -24,6 +24,8 @@ def my_screen():
             Iz_val = float(get_resultat_calcul('Iz')[1])
             G_val = float(get_resultat_calcul('G')[1])
             
+            cond_state = None
+            
             if choix_cas_entry_value == "Sur charge d'exploitation":
                 cas = 'CEXP'
                 f = float(calcul_f(cas, p_entry_value, grand_l_entry_value, Iy_val))
@@ -32,7 +34,7 @@ def my_screen():
                     cond_state = "Condition vérifiée"
                 else:
                     root.destroy()
-                    redimmention()
+                    redimmension()
             else:
                 cas = 'PP'
                 f = float(calcul_f(cas, p_entry_value, grand_l_entry_value, Iz=Iz_val, G=G_val))
@@ -41,7 +43,7 @@ def my_screen():
                     cond_state = "Condition vérifiée"
                 else:
                     root.destroy()
-                    redimmention()
+                    redimmension()
                     
             f = ("f", f)
             cond_verif_result = ("Rigidité des poutres", cond_state)
